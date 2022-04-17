@@ -1,0 +1,213 @@
+@charset "ISO-8859-1";
+/* Withdrawal Form*/
+
+/* Header Styling*/
+
+.heading{
+	width:device-width;	
+	height:50px;
+	text-align:center;
+	margin:2px;
+	margin-bottom:0;
+}
+.header-text{
+	font-size:30px;
+	font-family:new roman;
+	padding:5px;
+	background-color:lightgray;
+}
+
+.with-container{
+	padding:5px;
+	margin:5px;
+	background-color:cornsilk;
+}
+.fieldset-container{
+	width:device-width;
+	display:flex;
+	flex-direction:column;
+	margin:10px;
+	padding:-10px;
+	padding-bottom:15px;
+	background-color:lightblue;
+	border-radius:5px;
+	
+}
+section{
+	display:flex;
+}
+.line1{
+	display:flex;
+		
+}
+
+ .line1 div label{
+	margin-left:25px;
+}
+.line1{
+	display:inline-flex;	
+}
+.line1 div{
+	width:430px;
+}
+.line1 div label,input,select{
+	width:180px;
+	margin:7px;
+	padding:5px;
+	border-radius:5px;
+	font-size:20px;
+}
+ #user_email{
+	width:200px;
+}
+ .line1 div label{
+	margin-left:25px;
+}
+ .line1 div input{
+ font-size:20px;
+ }
+.address input{
+	margin-left:45px;
+}
+
+.fieldset-container legend{
+	font-family:new roman;
+	font-size:20px;
+	
+}
+
+
+ .fieldset-container .currency-details-div div {
+ 	display:flex;
+ 	flex-direction:column;
+ 	width:80px;
+ 	height:100px;
+ 	margin-left:35px;
+ 	margin-top:5px;	
+ 	margin-right:-10px;
+ }
+ .fieldset-container .currency-details-div div label{
+ 	width:70px;
+	margin-top:5px;
+	padding:5px;
+	border:2px solid black;
+	text-align:center;
+	background-color:lightgray;
+	font-size:20px;
+ }
+ .fieldset-container .currency-details-div div .currency-details-div-div{
+ 	display:flex;
+ 	flex-direction:row;
+ 	
+ }
+ .fieldset-container .currency-details-div div .currency-details-div-div input{
+ 	width:70px;
+	margin-top:5px;
+	margin-left:-35px;
+	padding:5px;
+	text-align:center;
+	background-color:cornsilk;
+	border-radius:0;
+ }
+ .fieldset-container .currency-details-div div .currency-details-div-div label{
+ 	border:none;
+ 	background-color:lightblue;
+ 	margin-left:-12px;
+ 	width:20px;
+ 	font-size:25px;
+ }
+ .fieldset-container .currency-details-div div .currency-details-div-div input:last-child{
+ 	width:150px;
+ 	height:40px;
+ 	font-size:30px;
+ }
+#total{
+	width:150px;
+} 
+.fieldset-container .currency-details-div div label .fa-fa-inr{
+	
+	margin:5px;
+}
+
+ .fieldset-button-container{
+	width:675px;
+	height:75px;
+	margin-left:300px;
+	margin-right:200px;
+	margin-top:20px;
+	display:flex;
+	flex-direction:row;
+	background-color:lightgray;
+	border-radius:5px;
+	
+}
+
+.fieldset-button-container .button-group .btn1{
+                padding: 10px;
+                margin:10px;
+                width: 200px;
+                background-color: rgb(68, 206, 68);
+                color: white;
+                font-size: 25px;
+                font-family: 'Times New Roman', Times, serif;
+                border-radius: 10px;
+                border: none;
+            }
+.fieldset-button-container .button-group .btn1:hover{
+                background-color: darkgreen;
+                border: none;
+            }
+ .fieldset-button-container .button-group .btn1:hover:active{
+                transform: translateY(5px);
+                border: none;
+            }
+            
+.fieldset-data-container{
+	width:1500px;
+	height:auto;
+	margin-left:8px;
+	margin-right:15px;
+	margin-top:20px;
+	background-color:lightgreen;
+	border:2px solid black;
+	
+}
+table{
+	width:99%;
+	border:1.5px solid black;
+	border-spacing:5px;
+	margin:10px;
+	padding:10px;
+	background-color:navyblue;
+	margin-left:10px;
+} 
+ table thead tr{
+	width:200px;
+	height:40px;
+	border:5px solid black;
+	border-spacing:10px;
+	background-color:#d0d7aa;
+	
+} 
+ table,thead, tr, td{
+ 	background-color:cornsilk;
+ 	font-size:20px;
+ 	font-family:new roman;
+ 	text-align:center;
+ }
+table, th, td {
+  border: 1px solid black;
+} 
+#c_id{
+ 	width:50px;
+ } 
+#c_name{
+	width:200px;
+	
+}  
+#depo_by, #c_mob,#dep_method, #amount{
+	width:120px;
+}  
+#c_add{
+	width:250px;
+}
