@@ -18,7 +18,7 @@ public class CashInDao {
 	RequestDispatcher dispatcher = null;
 	
 	private static final String InsertIntoCashInSource = "INSERT INTO Cash_In_Source(Cash_Tacker_Name, Cash_From_, Date, C_Transaction_Id, Email_Id) VALUES (?, ?, ?, ?, ?);";
-	private static final String InsertCurrencyIn = "INSERT INTO Currency_In_Count(Currency2000,Currency500,Currency200,Currency100,Currency50,Currency20,Currency10,Currency5,Currency2,Currency1,Total_Amount,C_Transaction_Id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
+	private static final String InsertCurrencyIn = "INSERT INTO Currency_In_Count(Currency2000,Currency500,Currency200,Currency100,Currency50,Currency20,Currency10,Currency5,Currency2,Currency1,Total_Amount,C_Transaction_Id,Date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);";
 //	protected Connection getConnection() {
 //		Connection connection  = DatabaseConnection.getConn();;
 //		try {
@@ -55,8 +55,8 @@ public class CashInDao {
 		return rowCount;
 	}
 	
-	public void insertCurrency(CurrencyModel currency) throws SQLException {
-			
+	public int insertCurrency(CurrencyModel currency) throws SQLException {
+			int rowCount1=0;
 			// try-with-resource statement will auto close the connection.
 		Connection connection  = DatabaseConnection.getConn();
 			try (//Connection connection = getConnection();
@@ -74,13 +74,15 @@ public class CashInDao {
 				preparedStatement.setInt(10, currency.getCurr1());
 				preparedStatement.setInt(11, currency.getTotal());
 				preparedStatement.setString(12, currency.getTransaction_id());
+				preparedStatement.setString(13,currency.getDate());
 				System.out.println(preparedStatement);
 				
-				preparedStatement.executeUpdate();
+				rowCount1 = preparedStatement.executeUpdate();
 				
 			} catch (SQLException e) {
 				printSQLException(e);
 			}
+			return rowCount1;
 		}
 	
 	private void printSQLException(SQLException ex) {

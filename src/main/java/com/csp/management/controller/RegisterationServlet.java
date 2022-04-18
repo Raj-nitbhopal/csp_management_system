@@ -98,7 +98,7 @@ public class RegisterationServlet extends HttpServlet {
             
             int rowCount =reg_dao.insertInRegisteration(registeration);
             
-            //dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher = request.getRequestDispatcher("register.jsp");
     		if(rowCount > 0) {
     			request.setAttribute("status", "success");
     			
@@ -106,14 +106,14 @@ public class RegisterationServlet extends HttpServlet {
     			request.setAttribute("status", "failed");
     		}
     		
-    		//dispatcher.forward(request, response);
-    		
+    		dispatcher.forward(request, response);
+    		response.sendRedirect("login.jsp");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        response.sendRedirect("login.jsp");
+        
 	}
 
 }

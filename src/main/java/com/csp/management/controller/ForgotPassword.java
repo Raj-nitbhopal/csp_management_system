@@ -1,6 +1,7 @@
 package com.csp.management.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class ForgotPassword extends HttpServlet {
 		RequestDispatcher dispatcher = null;
 		int otpvalue = 0;
 		HttpSession mySession = request.getSession();
-		
+		PrintWriter out = response.getWriter();
 		if(email!=null || !email.equals("")) {
 			// sending otp
 			Random rand = new Random();
@@ -60,7 +61,7 @@ public class ForgotPassword extends HttpServlet {
 				message.setText("your OTP is: " + otpvalue);
 				// send message
 				Transport.send(message);
-				System.out.println("message sent successfully");
+				out.println("Message Sent Successfully");
 			}
 
 			catch (MessagingException e) {

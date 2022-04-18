@@ -20,7 +20,7 @@ public class WithdrawDao {
 	
 	private static final String InsertInToWithdraw = "INSERT INTO Withdraw_Customer_Details(W_Customer_Id, Customer_Name, Aadhar_Number, Account_Number, Other, Address, Mobile_Number, Email_Id )VALUES(?,?,?,?,?,?,?,?);";
 	private static final String InsertInToWithdrawTransaction = "INSERT INTO Withdraw_Transaction(W_Transaction_Id, Withdraw_Mode, Date_of_Withdraw,Total_Amount, W_Customer_Id)VALUES(?,?,?,?,?);";
-	private static final String InsertCurrencyIn = "INSERT INTO Withdraw_Currency(Currency2000,Currency500,Currency200,Currency100,Currency50,Currency20,Currency10,Currency5,Currency2,Currency1,Total_Amount,W_Transaction_Id) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);";
+	private static final String InsertCurrencyIn = "INSERT INTO Withdraw_Currency(ID,Currency2000,Currency500,Currency200,Currency100,Currency50,Currency20,Currency10,Currency5,Currency2,Currency1,Total_Amount,W_Transaction_Id,Date) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 //	protected Connection getConnection() {
 //		Connection connection = null;
@@ -37,7 +37,8 @@ public class WithdrawDao {
 //		return connection;
 //	}
 	
-public void insertInWithdraw(WithdrawCustomerDetails Withdraw) throws SQLException {
+public int insertInWithdraw(WithdrawCustomerDetails Withdraw) throws SQLException {
+	int rowCount=0;
 		System.out.println(InsertInToWithdraw);
 		// try-with-resource statement will auto close the connection.
 		Connection connection = DatabaseConnection.getConn();
@@ -54,15 +55,16 @@ public void insertInWithdraw(WithdrawCustomerDetails Withdraw) throws SQLExcepti
 			preparedStatement.setString(8, Withdraw.getUserEmail());
 			System.out.println(preparedStatement);
 			
-			preparedStatement.executeUpdate();
+			rowCount = preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
+		return rowCount;
 	}
 
-public void insertInWithdrawTransaction(WithrawTransactionModel With_trans) throws SQLException {
-	
+public int insertInWithdrawTransaction(WithrawTransactionModel With_trans) throws SQLException {
+	int rowCount1=0;
 	// try-with-resource statement will auto close the connection.
 	Connection connection = DatabaseConnection.getConn();
 	try (//Connection connection = getConnection();
@@ -76,39 +78,43 @@ public void insertInWithdrawTransaction(WithrawTransactionModel With_trans) thro
 		
 		System.out.println(preparedStatement);
 		
-		preparedStatement.executeUpdate();
+		rowCount1 = preparedStatement.executeUpdate();
 		
 	} catch (SQLException e) {
 		printSQLException(e);
 	}
+	return rowCount1;
 }
 
-public void insertCurrency(CurrencyModel currency) throws SQLException {
+public int  insertCurrency(CurrencyModel currency) throws SQLException {
+	int rowCount2=0;
 	System.out.println(InsertCurrencyIn);
 	// try-with-resource statement will auto close the connection.
 	Connection connection = DatabaseConnection.getConn();
 	try (//Connection connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(InsertCurrencyIn)) {
-		
-		preparedStatement.setInt(1, currency.getCurr2000());
-		preparedStatement.setInt(2, currency.getCurr500());
-		preparedStatement.setInt(3, currency.getCurr200());
-		preparedStatement.setInt(4, currency.getCurr100());
-		preparedStatement.setInt(5, currency.getCurr50());
-		preparedStatement.setInt(6, currency.getCurr20());
-		preparedStatement.setInt(7, currency.getCurr10());
-		preparedStatement.setInt(8, currency.getCurr5());
-		preparedStatement.setInt(9, currency.getCurr2());
-		preparedStatement.setInt(10, currency.getCurr1());
-		preparedStatement.setInt(11, currency.getTotal());
-		preparedStatement.setString(12, currency.getTransaction_id());
+		preparedStatement.setInt(1, 0);
+		preparedStatement.setInt(2, currency.getCurr2000());
+		preparedStatement.setInt(3, currency.getCurr500());
+		preparedStatement.setInt(4, currency.getCurr200());
+		preparedStatement.setInt(5, currency.getCurr100());
+		preparedStatement.setInt(6, currency.getCurr50());
+		preparedStatement.setInt(7, currency.getCurr20());
+		preparedStatement.setInt(8, currency.getCurr10());
+		preparedStatement.setInt(9, currency.getCurr5());
+		preparedStatement.setInt(10, currency.getCurr2());
+		preparedStatement.setInt(11, currency.getCurr1());
+		preparedStatement.setInt(12, currency.getTotal());
+		preparedStatement.setString(13, currency.getTransaction_id());
+		preparedStatement.setString(14, currency.getDate());
 		System.out.println(preparedStatement);
 		
-		preparedStatement.executeUpdate();
+		rowCount2 = preparedStatement.executeUpdate();
 		
 	} catch (SQLException e) {
 		printSQLException(e);
 	}
+	return rowCount2;
 }
 		private void printSQLException(SQLException ex) {
 		    for (Throwable e: ex) {

@@ -89,24 +89,24 @@ public class CashInServlet extends HttpServlet {
 		currency.setCurr1(Curr1);
 		currency.setTotal(Total);
 		currency.setTransaction_id(C_Transaction_Id);
+		currency.setDate(Date);
 		try {
-			 int rowCount =cashdao.insertInCashIn(CashIn);
-	             
-	           // dispatcher = request.getRequestDispatcher("index.jsp");
-	    		if(rowCount > 0) {
+			 int rowCount =cashdao.insertInCashIn(CashIn);	             	        	    		
+			 int rowCount1 = cashdao.insertCurrency(currency);
+			 dispatcher = request.getRequestDispatcher("cashin.jsp");
+	    		if(rowCount > 0 && rowCount1>0) {
 	    			request.setAttribute("status", "success");
-	    			
+	    			dispatcher.forward(request, response);
 	    		}else {
 	    			request.setAttribute("status", "failed");
 	    		}
-	    		cashdao.insertCurrency(currency);
-	    		                       
+	    		dispatcher.forward(request, response);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		//dispatcher.forward(request, response);
-		response.sendRedirect("index.jsp");
+		
+		//response.sendRedirect("index.jsp");
 	}
 
 }

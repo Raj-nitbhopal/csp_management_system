@@ -48,7 +48,7 @@ public class Login extends HttpServlet {
 		}
 		//Connection conn = DatabaseConnection.getConn();
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/CSP_System?useSSL=false","root","System");
 			
 			PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM System_User WHERE User_Type=? and Email_Id = ? and Password = ?");

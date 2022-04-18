@@ -14,7 +14,14 @@ public class CurrencyModel {
 	private int Curr1;	
 	private int Total;
 	private String Transaction_id;
+	private String Date;
 	
+	public String getDate() {
+		return Date;
+	}
+	public void setDate(String date) {
+		Date = date;
+	}
 	public int getCurr2000() {
 		return Curr2000;
 	}

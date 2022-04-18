@@ -11,8 +11,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+      <!--  <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css' rel='stylesheet'> -->		
+	<!--  	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>-->
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="alert/dist/sweetalert.css">
         <link href="css/withdrawstyles.css" rel="stylesheet" />
         <script src="https://kit.fontawesome.com/362a4931bd.js" ></script>        
         <script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -44,8 +47,10 @@
 
 </head>
 <body class="with-container">
-		<div class="heading">
+<input type="hidden" id="status" value="<%=request.getAttribute("status") %>">
+		<div class="heading ">
 			<header class="header-text">Withdrawal Form</header>
+			<!--  <a class="btn btn-danger float-right mx-10" href="index.jsp">Back To Home</a>-->
 		</div>
 	<form action="WithdrawServlet" method = "post" >		
 		<fieldset class="fieldset-container">
@@ -81,8 +86,8 @@
 					<input type="text" name="cust_mob" placeholder="Mobile Number">
 				</div>	
 				<div >
-					<label for="email_id"><b>User Email Id*</b> </label> 
-					<input type="text" name="email_id" readonly value=<%= session.getAttribute("email") %>>
+					<!-- <label for="email_id"><b>User Email Id*</b> </label>  -->
+					<input type="hidden" name="email_id"  readonly value=<%= session.getAttribute("email") %>>
 				</div>							
 			</section>			
 		</fieldset >
@@ -194,9 +199,9 @@
 		
 		<fieldset class="fieldset-button-container">
 			<section class="button-group">
-					  <button class="btn1">Withdraw</button>
+					  <input class="btn1" type="submit" Value ="Withdraw" ></input>
 					  <input class="btn1" type="reset" value="Clear">
-					  <button class="btn1">Print</button>
+					  <button class="btn1" disabled>Print</button>
 			</section>		
 		</fieldset>
 		<fieldset class="fieldset-data-container">
@@ -255,6 +260,43 @@
 			</table>		
 		</fieldset>
 	</form>
-	
+	<script src="vendor/jquery/jquery.min.js"></script> 
+	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	<script type="text/javascript">
+		var status = document.getElementById("status").value;
+		if(status == "success"){
+			swal("Congrats", "Withdraw Successfully","success");
+		}
+		if(status == "failed"){
+			swal("Sorry", "Please Fill The Form Carefully","error");
+		}
+		if(status == "invalidCustomerId"){
+			swal("Sorry", "Please Enter Customer Id","error");
+		}
+		if(status == "invalidCustomerName"){
+			swal("Sorry", "Please Enter Customer Name","error");
+		}
+		if(status == "invalidAdAcOtNumber"){
+			swal("Sorry", "Please Enter Account/Aadhar Number ","error");
+		}
+		
+		if(status == "invalidMobileNo"){
+			swal("Sorry", "Please Enter Mobile Number","error");
+		}
+		if(status == "invalidMobileLength"){
+			swal("Sorry", "Mobile Number Should be 10 Digits","error");
+		}
+		
+		if(status == "invalidtransactionId"){
+			swal("Sorry", "Please Enter Transaction Id","error");
+		}
+		if(status == "invalidDate"){
+			swal("Sorry", "Please Choose Date","error");
+		}
+		if(status == "invalidwithdrawMode"){
+			swal("Sorry", "Please Select Valid Withdraw Method ","error");
+		}
+	</script>
 </body>
 </html>

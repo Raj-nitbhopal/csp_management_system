@@ -10,11 +10,13 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+       <!--   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
         <link href="css/withdrawstyles.css" rel="stylesheet" />
         <link rel="stylesheet" href="alert/dist/sweetalert.css">
         <script src="https://kit.fontawesome.com/362a4931bd.js" ></script>
       	<script type="text/javascript" src="//code.jquery.com/jquery-1.10.2.js"></script>
+      <!--	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">  -->
+ 		<!--  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> -->
 		<script type="text/javascript">
 		function sum() {
 		var cr2000 = document.getElementById('c2000').value;
@@ -38,11 +40,25 @@
 <title>Cash In</title>
 </head>
 <body>
-	<div class="heading">
+	  <div class="heading">
 		<header class="header-text">Cash In</header>
-		
-		
+				
 	</div>
+	<!--	
+	<div class="container mt-3">
+  <!--  <div class="card">
+    <div class="card-body d-flex flex-row justify-content-center">
+      <h4 class="card-title justify-content-between" >Withdraw Form</h4>
+      <a href="" class="d-flex  float-start"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+  </div>
+ 
+  <div class="d-flex justify-content-between bg-basic mb-3">
+    <div class="p-2 "></div>
+    <div class="p-2 bg-warning">Flex item 2</div>
+    <div class="p-2 bg-primary">Flex item 3</div>
+  </div>
+</div> -->
 	<input type="hidden" id="status" value="<%=request.getAttribute("status") %>">
 	<form action="CashIn" method="post" name="cashinform">
 		<fieldset class="fieldset-container">
@@ -79,9 +95,9 @@
 					<label for="trans_id"><b>Transaction id*</b> </label> 
 					<input type="text" name="transaction_id" placeholder="Transaction id">
 				</div>
-				<div >
-					<label for="email_id"><b>User Email Id*</b> </label> 
-					<input type="text" id ="user_email" name="email_id" readonly value=<%= session.getAttribute("email") %>>
+				<div>
+					<!--  <label for="email_id"><b>User Email Id*</b> </label> -->
+					<input type="hidden" name="email_id"  readonly value=<%= session.getAttribute("email") %>>
 				</div>
 									
 			</section>
@@ -171,7 +187,7 @@
 			<section class="button-group">
 					  <input class="btn1" type="Submit" value = "Deposit" >
 					  <input class="btn1" type="reset" value="Clear">
-					  <button class="btn1">Print</button>
+					  <button class="btn1" disabled>Print</button>
 			</section>		
 		</fieldset >
 		
