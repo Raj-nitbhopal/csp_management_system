@@ -6,12 +6,13 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>Change Password</title>
-<link
+	<link
 	href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css'
 	rel='stylesheet'>
-<link
+	<link
 	href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'
 	rel='stylesheet'>
+	<link rel="stylesheet" href="alert/dist/sweetalert.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
 <script type='text/javascript'
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
@@ -31,6 +32,7 @@
 	<div>
 		<!-- Container containing all contents -->
 		<div class="container">
+		<input type="hidden" id="status" value="<%=request.getAttribute("status") %>">
 			<div class="row justify-content-center">
 				<div class="col-12 col-md-9 col-lg-7 col-xl-6 mt-5">
 					<!-- White Container -->
@@ -75,7 +77,24 @@
 		</div>
 	</div>
 	<script type='text/javascript'
-		src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js'></script>
+	src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js'></script>
+	<script src="vendor/jquery/jquery.min.js"></script> 
+	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	<script type="text/javascript">
+		var status = document.getElementById("status").value;
+		if(status == "invalidnewPassword"){
+			swal("Sorry", "Please Enter Password","error");
+		}
+		
+		if(status == "resetSuccess"){
+			swal("Congrats", "Password Change Successfully","success");
+		}
+		if(status == "invalidconfPassword"){
+			swal("Sorry", "Password Not Matched","error");
+		}	
+		
+	</script>
 	
 </body>
 </html>

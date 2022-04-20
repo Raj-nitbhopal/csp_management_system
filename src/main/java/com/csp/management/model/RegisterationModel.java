@@ -26,8 +26,7 @@ public class RegisterationModel {
 	}
 	public void setContactNo(String contactNo) {
 		ContactNo = contactNo;
-	}
-	
+	}	
 
 	public String getFirstName() {
 		return FirstName;

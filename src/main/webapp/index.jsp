@@ -53,7 +53,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!"><b><%= session.getAttribute("name") %></b></a></li>
+                        <li><h3><a class="dropdown-item" href="#!"><b><%= session.getAttribute("name") %></b></a></h3></li>
+                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">Settings</a></li>                        
                         <li><a class="dropdown-item" href="Logout">Logout</a></li>
                     </ul>
@@ -101,14 +102,11 @@
                                     </div>
                             
                             <div class="sb-sidenav-menu-heading">Reports</div>
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="Reports.jsp">
                                 <span class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></span>
-                                Currency In/Out
+                                Reports Form
                             </a>
-                            <a class="nav-link" href="">
-                                <span class="sb-nav-link-icon"><i class="fas fa-table"></i></span>
-                                Withdraw
-                            </a>
+                           
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">

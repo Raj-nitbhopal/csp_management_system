@@ -101,13 +101,13 @@ public class RegisterationServlet extends HttpServlet {
             dispatcher = request.getRequestDispatcher("register.jsp");
     		if(rowCount > 0) {
     			request.setAttribute("status", "success");
-    			
+    			response.sendRedirect("login.jsp");
     		}else {
     			request.setAttribute("status", "failed");
     		}
     		
     		dispatcher.forward(request, response);
-    		response.sendRedirect("login.jsp");
+    		
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

@@ -36,12 +36,10 @@ public class RegisterationDao {
 
 
 	public int insertInRegisteration(RegisterationModel register) throws SQLException {
-		int rowCount=0;
-		// try-with-resource statement will auto close the connection.
+		int rowCount=0;		
 		Connection connection = DatabaseConnection.getConn();
-		try (//Connection connection = getConnection();
-				PreparedStatement preparedStatement = connection.prepareStatement(InsertInToSystem_User)) {
-		
+		try (
+			PreparedStatement preparedStatement = connection.prepareStatement(InsertInToSystem_User)) {		
 			preparedStatement.setString(1, register.getUserType());
 			preparedStatement.setString(2, register.getFirstName());
 			preparedStatement.setString(3, register.getLastName());
@@ -49,10 +47,8 @@ public class RegisterationDao {
 			preparedStatement.setString(5, register.getAddress());
 			preparedStatement.setString(6, register.getContactNo());
 			preparedStatement.setString(7, register.getPassword());			
-			System.out.println(preparedStatement);
-			
-			 rowCount = preparedStatement.executeUpdate();
-			
+			System.out.println(preparedStatement);			
+			 rowCount = preparedStatement.executeUpdate();			
 		} catch (SQLException e) {
 			printSQLException(e);
 		}
