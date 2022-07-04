@@ -1,1 +1,2 @@
 # csp_management_system
+The project CSP Management System is Handle the basic functionalities of Bank, CSP stand for Customer Service Point, CSP operated in rural area in the form of Mini Bank which is associated by any private and government Bank. These Mini bank can also handle the basic transaction like Debit, Withdrawal and Account Services same as own his associated bank in limited constraints.
