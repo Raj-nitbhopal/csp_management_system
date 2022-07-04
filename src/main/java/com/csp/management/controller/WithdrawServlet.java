@@ -1,6 +1,8 @@
 package com.csp.management.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +28,7 @@ public class WithdrawServlet extends HttpServlet {
      
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher dispatcher = null;
 		String CustomerId = request.getParameter("cust_id");
 		String CustomerName = request.getParameter("cust_name");
 		String WithdrawBy = request.getParameter("withdrawBy");
@@ -52,16 +55,59 @@ public class WithdrawServlet extends HttpServlet {
 		withdraw.setMobileNo(MobileNo);
 		withdraw.setUserEmail(Email);
 		
+		if(CustomerId== null || CustomerId.equals("")) {
+			request.setAttribute("status", "invalidCustomerId");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(CustomerName== null || CustomerName.equals("")) {
+			request.setAttribute("status", "invalidCustomerName");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(AdAcOtNumber== null || AdAcOtNumber.equals("")) {
+			request.setAttribute("status", "invalidAdAcOtNumber");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(MobileNo== null || MobileNo.equals("")) {
+			request.setAttribute("status", "invalidMobileNo");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(MobileNo.length()<10) {
+			request.setAttribute("status", "invalidMobileLength");
+			dispatcher = request.getRequestDispatcher("registration.jsp");
+			dispatcher.forward(request, response);
+		}
 		String transactionId = request.getParameter("trans_id");
 		String Date = request.getParameter("date");
 		String withdrawMode = request.getParameter("WithdrawMethod");
 		int total_amount = Integer.parseInt((request.getParameter("total")));
+		
+		if(transactionId== null || transactionId.equals("")) {
+			request.setAttribute("status", "invalidtransactionId");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(Date== null || Date.equals("")) {
+			request.setAttribute("status", "invalidDate");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}
+		if(withdrawMode== null || withdrawMode.equals("")) {
+			request.setAttribute("status", "invalidwithdrawMode");
+			dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+			dispatcher.forward(request, response);
+		}		
+		
 		WithrawTransactionModel with_trans = new WithrawTransactionModel();
 		with_trans.setTransaction_Id(transactionId);
 		with_trans.setDate_of_Withdraw(Date);
 		with_trans.setWithdraw_Mode(withdrawMode);
 		with_trans.setCustomer_Id(CustomerId);
 		with_trans.setTotalAmount(total_amount);
+		
 		
 		String W_Transaction_Id = request.getParameter("trans_id");
 		int Curr2000 = Integer.parseInt((request.getParameter("currency2000")));
@@ -92,17 +138,25 @@ public class WithdrawServlet extends HttpServlet {
 		currency.setCurr1(Curr1);
 		currency.setTotal(Total);
 		currency.setTransaction_id(W_Transaction_Id);
-		
+		currency.setDate(Date);
 		try {
-            
-			withdrawdao.insertInWithdraw(withdraw);
-            withdrawdao.insertInWithdrawTransaction(with_trans);
-            withdrawdao.insertCurrency(currency);
+     
+            int rowCount =withdrawdao.insertInWithdraw(withdraw);           	    		
+	    	int rowCount1 =   withdrawdao.insertInWithdrawTransaction(with_trans);
+	    	int rowCount2 =   withdrawdao.insertCurrency(currency);
+	    	dispatcher = request.getRequestDispatcher("Withdrawal.jsp");
+	    		if(rowCount > 0 && rowCount1>0 && rowCount2>0) {
+	    			request.setAttribute("status", "success");
+	    			
+	    		}else {
+	    			request.setAttribute("status", "failed");
+	    		}   
+	    		dispatcher.forward(request, response);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		response.sendRedirect("Withdrawal.jsp");
+		response.sendRedirect("index.jsp");
 	}
 
 }

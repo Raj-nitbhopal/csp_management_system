@@ -11,6 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+         <link rel="stylesheet" href="alert/dist/sweetalert.css">
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
          <script src="https://kit.fontawesome.com/362a4931bd.js" ></script>
@@ -46,7 +47,7 @@
 		<div class="heading">
 			<header class="header-text">Deposit Form</header>
 		</div>
-		
+	<input type="hidden" id="status" value="<%=request.getAttribute("status") %>">	
 	<form action="DepositServlet" method="post">		
 		<fieldset class="fieldset-container">
 			<legend class="legend-text"><b>CUSTOMER DETAILS</b></legend>
@@ -81,8 +82,8 @@
 					<input type="text" name="cust_mob" placeholder="Mobile Number">
 				</div>	
 				<div >
-					<label for="email_id"><b>User Email Id*</b> </label> 
-					<input type="text" name="email_id" readonly  value=<%= session.getAttribute("email") %>>
+					<!--  <label for="email_id"><b>User Email Id*</b> </label> -->
+					<input type="hidden" name="email_id" readonly  value=<%= session.getAttribute("email") %>>
 				</div>							
 			</section>
 			
@@ -195,9 +196,9 @@
 		
 		<fieldset class="fieldset-button-container">
 			<section class="button-group">
-					  <button class="btn1">Deposit</button>
+					  <input class="btn1" type="submit" value="Deposit">
 					  <input class="btn1" type="reset" value="Clear">
-					  <button class="btn1">Print</button>
+					  <button class="btn1" disabled>Print</button>
 			</section>		
 		</fieldset >
 		
@@ -257,7 +258,44 @@
 			</table>		
 		</fieldset>
 	</form>
-	 
+	 <script src="vendor/jquery/jquery.min.js"></script> 
+	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>	
+	<script type="text/javascript">
+		var status = document.getElementById("status").value;
+		if(status == "success"){
+			swal("Congrats", "Deposit Successfully","success");
+		}
+		if(status == "failed"){
+			swal("Sorry", "Please Fill The Form Carefully","error");
+		}
+		if(status == "invalidCustomerId"){
+			swal("Sorry", "Please Enter Customer Id","error");
+		}
+		if(status == "invalidCustomerName"){
+			swal("Sorry", "Please Enter Customer Name","error");
+		}
+		if(status == "invalidAdAcOtNumber"){
+			swal("Sorry", "Please Enter Account/Aadhar Number ","error");
+		}
+		
+		if(status == "invalidMobileNo"){
+			swal("Sorry", "Please Enter Mobile Number","error");
+		}
+		if(status == "invalidMobileLength"){
+			swal("Sorry", "Mobile Number Should be 10 Digits","error");
+		}
+		
+		if(status == "invalidtransactionId"){
+			swal("Sorry", "Please Enter Transaction Id","error");
+		}
+		if(status == "invalidDate"){
+			swal("Sorry", "Please Choose Date","error");
+		}
+		if(status == "invaliddepositMode"){
+			swal("Sorry", "Please Select Valid Deposit Method ","error");
+		}
+	</script>
 </body>
 
 </html>

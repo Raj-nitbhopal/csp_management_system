@@ -1,6 +1,8 @@
 package com.csp.management.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,8 @@ public class DepositServlet extends HttpServlet {
 		depositdao = new DepositDao();
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		RequestDispatcher dispatcher = null;
 		String CustomerId = request.getParameter("cust_id");
 		String CustomerName = request.getParameter("cust_name");
 		String DepositBy = request.getParameter("depositBy");
@@ -46,11 +50,53 @@ public class DepositServlet extends HttpServlet {
 			deposit.setAddress(CustomerAddress);
 			deposit.setMobileNo(MobileNo);
 			deposit.setEmail(Email);
-		
+			
+			if(CustomerId== null || CustomerId.equals("")) {
+				request.setAttribute("status", "invalidCustomerId");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(CustomerName== null || CustomerName.equals("")) {
+				request.setAttribute("status", "invalidCustomerName");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(AdAcOtNumber== null || AdAcOtNumber.equals("")) {
+				request.setAttribute("status", "invalidAdAcOtNumber");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(MobileNo== null || MobileNo.equals("")) {
+				request.setAttribute("status", "invalidMobileNo");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(MobileNo.length()<10) {
+				request.setAttribute("status", "invalidMobileLength");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			
 			String transactionId = request.getParameter("dtrans_id");
 			String Date = request.getParameter("date");
 			String depositMode = request.getParameter("depositMethod");
 			int totalAmount = Integer.parseInt((request.getParameter("total")));
+			
+			if(transactionId== null || transactionId.equals("")) {
+				request.setAttribute("status", "invalidtransactionId");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(Date== null || Date.equals("")) {
+				request.setAttribute("status", "invalidDate");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
+			if(depositMode== null || depositMode.equals("")) {
+				request.setAttribute("status", "invaliddepositMode");
+				dispatcher = request.getRequestDispatcher("deposit.jsp");
+				dispatcher.forward(request, response);
+			}
 			
 			DepositTransactionModel deposit_trans = new DepositTransactionModel();
 			deposit_trans.setTransaction_Id(transactionId);
@@ -88,18 +134,27 @@ public class DepositServlet extends HttpServlet {
 			currency.setCurr1(Curr1);
 			currency.setTotal(Total);
 			currency.setTransaction_id(D_Transaction_Id);
-			
+			currency.setDate(Date);
 		try {
-            
-			depositdao.insertInDeposit(deposit);
-			depositdao.InsertInToDepositTransaction(deposit_trans);
-			depositdao.insertDepositCurrency(currency);
-            
+	
+			int rowCount =depositdao.insertInDeposit(deposit);               		
+	    	int rowCount1 =  depositdao.InsertInToDepositTransaction(deposit_trans);
+	    	int rowCount2 =   depositdao.insertDepositCurrency(currency);
+	    	dispatcher = request.getRequestDispatcher("deposit.jsp");	
+	    		if(rowCount > 0 && rowCount1>0 && rowCount2>0) {
+	    			request.setAttribute("status", "success");
+	    			
+	    		}else {
+	    			request.setAttribute("status", "failed");
+	    		}   
+	    		dispatcher.forward(request, response);
+	    		
+	    		//response.sendRedirect("index.jsp");
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		response.sendRedirect("deposit.jsp");
+		
 	}
 
 }

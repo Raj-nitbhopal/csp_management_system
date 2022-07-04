@@ -29,9 +29,9 @@ public class NewPassword extends HttpServlet {
 
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cspsystem?useSSL=false", "root",
+				Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/CSP_System?useSSL=false", "root",
 						"System");
-				PreparedStatement pst = con.prepareStatement("update Registeration set Password = ? where Email = ? ");
+				PreparedStatement pst = con.prepareStatement("update System_User set Password = ? where Email_Id = ? ");
 				pst.setString(1, newPassword);
 				pst.setString(2, (String) session.getAttribute("email"));
 
@@ -41,7 +41,7 @@ public class NewPassword extends HttpServlet {
 					dispatcher = request.getRequestDispatcher("login.jsp");
 				} else {
 					request.setAttribute("status", "resetFailed");
-					dispatcher = request.getRequestDispatcher("login.jsp");
+					dispatcher = request.getRequestDispatcher("newPassword.jsp");
 				}
 				dispatcher.forward(request, response);
 			} catch (Exception e) {

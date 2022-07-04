@@ -1,7 +1,7 @@
 <%
-	//if(session.getAttribute("name")==null) {
-		//response.sendRedirect("login.jsp");
-	//}
+	if(session.getAttribute("name")==null) {
+		response.sendRedirect("login.jsp");
+	}
 %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -30,7 +30,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" ></script>
     </head>
     <body class="sb-nav-fixed">
-    		<%response.setIntHeader("Refresh", 5); %>
+    	
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.jsp">CSP Management</a>
@@ -53,7 +53,8 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!"><b><%= session.getAttribute("name") %></b></a></li>
+                        <li><h3><a class="dropdown-item" href="#!"><b><%= session.getAttribute("name") %></b></a></h3></li>
+                         <li><hr class="dropdown-divider" /></li>
                         <li><a class="dropdown-item" href="#!">Settings</a></li>                        
                         <li><a class="dropdown-item" href="Logout">Logout</a></li>
                     </ul>
@@ -101,14 +102,11 @@
                                     </div>
                             
                             <div class="sb-sidenav-menu-heading">Reports</div>
-                            <a class="nav-link" href="">
+                            <a class="nav-link" href="Reports.jsp">
                                 <span class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></span>
-                                Currency In/Out
+                                Reports Form
                             </a>
-                            <a class="nav-link" href="">
-                                <span class="sb-nav-link-icon"><i class="fas fa-table"></i></span>
-                                Withdraw
-                            </a>
+                           
                         </div>
                     </div>
                     <div class="sb-sidenav-footer">
@@ -197,7 +195,29 @@
                                     
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                     
-                                        <div class="small text-white"><h4 class="mx-2"><i class="fa-solid fa-indian-rupee-sign"></i><span class="mx-2" ></span></h4></div>
+                                        <%
+													
+														Statement stmt7 = null;
+														ResultSet rs7 = null;
+														Connection connection7 = DatabaseConnection.getConn();
+														try{
+															
+															stmt7 = connection7.createStatement();
+															
+															String query = "select sum((select sum(Total_Amount) from currency_in_count)- (select (sum(Total_Amount)) from  withdraw_currency));";
+															
+															rs7 = stmt7.executeQuery(query);
+															
+															while(rs7.next()){
+																%>
+																			<div class="small text-white"><h4 class="mx-2"><i class="fa-solid fa-indian-rupee-sign"></i><span class="mx-2" ><%= rs7.getString(1) %></span></h4></div>		
+																<% 
+															}
+															
+														}catch(Exception ex){
+															
+														}					
+									%>
                                         
                                     </div>
                                 </div>
@@ -336,7 +356,7 @@
                                 <div class="card mb-2">
                                     <div class="card-header">
                                         <i class="fa-solid fa-money-bill-transfer"></i>
-                                        <b>Currency Out</b>
+                                        <b>Currency Out(Withdraw)</b>
                                     </div>
                                     <div class="card-body">
                                     	<table class="table table-bordered">
@@ -438,64 +458,64 @@
 											    </thead>
 											    <tbody>
 											    	 <%
-											    	 ResultSet rs2 = null;
+											    	 ResultSet rs6 = null;
 																											
 														try{
 														
-															String query = "select sum(c.Currency2000-w.Currency2000) from currency_in_count c, withdraw_currency w;";
+															String query = "select sum((select sum(Currency2000) from currency_in_count)- (select (sum(Currency2000)) from  withdraw_currency)),sum((select sum(Currency500) from currency_in_count)- (select (sum(Currency500)) from  withdraw_currency)),sum((select sum(Currency200) from currency_in_count)- (select (sum(Currency200)) from  withdraw_currency)),sum((select sum(Currency100) from currency_in_count)- (select (sum(Currency100)) from  withdraw_currency)),sum((select sum(Currency50) from currency_in_count)- (select (sum(Currency50)) from  withdraw_currency)),sum((select sum(Currency20) from currency_in_count)- (select (sum(Currency20)) from  withdraw_currency)),sum((select sum(Currency10) from currency_in_count)- (select (sum(Currency10)) from  withdraw_currency)),sum((select sum(Currency5) from currency_in_count)- (select (sum(Currency5)) from  withdraw_currency)),sum((select sum(Currency2) from currency_in_count)- (select (sum(Currency2)) from  withdraw_currency)),sum((select sum(Currency1) from currency_in_count)- (select (sum(Currency1)) from  withdraw_currency));";
 															
-															rs2 = stmt.executeQuery(query);
+															rs6 = stmt.executeQuery(query);
 															
-															while(rs2.next()){
+															while(rs6.next()){
 																%>
 																	<tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>2000</td>
-																        <td><%=rs2.getString(1) %></td>
+																        <td><%=rs6.getString(1) %></td>
 																       
 																      </tr>
 																    	<tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>500</td>
-																        <td><%=rs2.getString(2) %></td>
+																        <td><%=rs6.getString(2) %></td>
 																        
 																      </tr>
 																      <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>200</td>
-																        <td><%=rs2.getString(3) %></td>
+																        <td><%=rs6.getString(3) %></td>
 																       
 																      </tr>
 																      <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>100</td>
-																        <td><%=rs2.getString(4) %></td>
+																        <td><%=rs6.getString(4) %></td>
 																       
 																      </tr>
 																    	<tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>50</td>
-																        <td><%=rs2.getString(5) %></td>
+																        <td><%=rs6.getString(5) %></td>
 																        
 																      </tr>
 																      <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>20</td>
-																        <td><%=rs2.getString(6) %></td>
+																        <td><%=rs6.getString(6) %></td>
 																       
 																      </tr>
 																       <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>10</td>
-																        <td><%=rs2.getString(7) %></td>
+																        <td><%=rs6.getString(7) %></td>
 																       
 																      </tr>
 																    	<tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>5</td>
-																        <td><%=rs2.getString(8) %></td>
+																        <td><%=rs6.getString(8) %></td>
 																        
 																      </tr>
 																      <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>2</td>
-																        <td><%=rs2.getString(9) %></td>
+																        <td><%=rs6.getString(9) %></td>
 																       
 																      </tr>
 																      <tr>
 																        <td><i class="fa-solid fa-indian-rupee-sign mx-1"></i>1</td>
-																        <td><%=rs2.getString(10) %></td>
+																        <td><%=rs6.getString(10) %></td>
 																       
 																      </tr>					
 																<% 
